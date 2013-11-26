@@ -22,6 +22,7 @@
   (into {} (for [k fields] [(keyword k) (.get dbobject k)])))
 
 (defn load-user-record [username]
+  (timbre/info (<< "looking up user \"~{username}\""))
   (if-let [user (mc/find-one "users" {:username username})]
     (get-dbobject-fields user "username" "password")
     nil))

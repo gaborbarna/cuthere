@@ -24,4 +24,4 @@
      (ganelon.web.app/javascript-actions-route))
     middleware/wrap-x-forwarded-for
     (ring.middleware.stacktrace/wrap-stacktrace)
-    (ring.middleware.reload/wrap-reload {:dirs ["src/cuthere/web"]})))
+    (ring.middleware.reload/wrap-reload {:dirs ["src/cuthere"]})))
