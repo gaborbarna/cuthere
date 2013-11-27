@@ -12,7 +12,9 @@
                  [com.cemerick/friend "0.2.0"]
                  [com.novemberain/monger "1.5.0"]
                  [ring-server "0.3.1"]
-                 [ritz/ritz-nrepl-middleware "0.7.0"]]
+                 [ritz/ritz-nrepl-middleware "0.7.0"]
+                 [org.clojure/tools.trace "0.7.6"]
+                 [crypto-random "1.1.0"]]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
   :main cuthere.core
