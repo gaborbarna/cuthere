@@ -1,4 +1,4 @@
-(ns cuthere.db.core
+1(ns cuthere.db.core
   (:require [monger.core :as mg]
             [monger.collection :as mc]
             [taoensso.timbre :as timbre]
@@ -31,7 +31,7 @@
     (mc/insert-and-return
      "users" user-map)))
 
-(def verify-user [username verification-text]
+(defn verify-user [username verification-text]
   (if-let [user (mc/find-one-as-map "users" {:username username})]
     (if (= (user :type) :basic)
       (= ((user :email-verification) :verification-text) verification-text)
