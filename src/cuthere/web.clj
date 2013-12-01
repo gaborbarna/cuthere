@@ -11,9 +11,9 @@
 
 (defmacro dbg[x] `(let [x# ~x] (println "dbg:" '~x "=" x#) x#))
 
-(defn init []
+(defn init [cfg]
   (timbre/info "initialize app")
-  (db/init))
+  (db/init (cfg :mongo-uri)))
 
 (defn destroy []
   (timbre/info "cuthere destroy"))

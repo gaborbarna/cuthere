@@ -28,8 +28,12 @@
   (http-kit/run-server
    (if dev (reload/wrap-reload handler) handler)
    {:port port})
-  (init)
+  (let [cfg (get-config)]
+    (init cfg))
   (timbre/info (<< "server started on port ~{port}")))
+
+(defn get-config []
+  {:mongo-uri (System/getenv "MONGOLAB_URI")})
 
 (defn -main [& args]
   (let [cli (get-cli args)]
