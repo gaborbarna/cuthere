@@ -9,12 +9,10 @@
   (:import [org.bson.types ObjectId]))
 
 
-(defn init
-  ([uri] (mg/connect-via-uri! uri))
-  ([& {:keys [host port db] :or {host "localhost", port 27017, db "cuthere"}}]
-     (mg/connect! {:host host :port port})
-     (mg/set-db! (mg/get-db "cuthere"))
-     (timbre/info (<< "db: ~{host}:~{port}/~{db}"))))
+(defn init [uri]
+  (mg/connect-via-uri! uri)
+  (mg/set-db! (mg/get-db "cuthere"))
+  (timbre/info (<< "db: ~{host}:~{port}/~{db}")))
 
 (defn create-user-map [username password type]
   (let [hash-pwd (hash-bcrypt password)
