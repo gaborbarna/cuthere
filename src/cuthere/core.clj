@@ -25,9 +25,9 @@
     (catch Exception e (get-cli [] :msg (.getMessage e) :show-help true))))
 
 (defn get-config []
-  {:mongo: {:uri (System/getenv "MONGOLAB_URI"),
-            :user "cuthere"
-            :pwd "cuthere"}})
+  {:mongo {:uri (System/getenv "MONGOLAB_URI"),
+           :user "cuthere"
+           :pwd "cuthere"}})
 
 (defn start-app [{dev :dev, port :port}]
   (http-kit/run-server

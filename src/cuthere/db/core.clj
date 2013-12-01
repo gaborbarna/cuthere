@@ -11,8 +11,8 @@
 
 (defn init [& {:keys [user pwd uri]}]
   (let [full-uri (<< "~{user}:~{pwd}@~{uri}")]
-    (mg/connect-via-uri! full-uri)
-    (timbre/info (<< "db: ~{uri}"))))
+    (timbre/info (<< "db: ~{uri}"))    
+    (mg/connect-via-uri! full-uri)))
 
 (defn create-user-map [username password type]
   (let [hash-pwd (hash-bcrypt password)
