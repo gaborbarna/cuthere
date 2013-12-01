@@ -24,6 +24,9 @@
        :extras extras, :banner banner-extras})
     (catch Exception e (get-cli [] :msg (.getMessage e) :show-help true))))
 
+(defn get-config []
+  {:mongo-uri (System/getenv "MONGOLAB_URI")})
+
 (defn start-app [{dev :dev, port :port}]
   (http-kit/run-server
    (if dev (reload/wrap-reload handler) handler)
@@ -31,9 +34,6 @@
   (let [cfg (get-config)]
     (init cfg))
   (timbre/info (<< "server started on port ~{port}")))
-
-(defn get-config []
-  {:mongo-uri (System/getenv "MONGOLAB_URI")})
 
 (defn -main [& args]
   (let [cli (get-cli args)]
