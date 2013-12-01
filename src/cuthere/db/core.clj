@@ -9,10 +9,10 @@
   (:import [org.bson.types ObjectId]))
 
 
-(defn init [uri]
-  (mg/connect-via-uri! uri)
-  (mg/set-db! (mg/get-db "cuthere"))
-  (timbre/info (<< "db: ~{uri}")))
+(defn init [& {:keys [user pwd uri]}]
+  (let [full-uri (<< "~{user}:~{pwd}@~{uri}")]
+    (mg/connect-via-uri! full-uri)
+    (timbre/info (<< "db: ~{uri}"))))
 
 (defn create-user-map [username password type]
   (let [hash-pwd (hash-bcrypt password)

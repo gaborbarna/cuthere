@@ -13,7 +13,7 @@
 
 (defn init [cfg]
   (timbre/info "initialize app")
-  (db/init (cfg :mongo-uri)))
+  (apply db/init (apply concat (cfg :mongo-uri))))
 
 (defn destroy []
   (timbre/info "cuthere destroy"))
