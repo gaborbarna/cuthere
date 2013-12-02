@@ -1,3 +1,4 @@
+
 1(ns cuthere.db.core
   (:require [monger.core :as mg]
             [monger.collection :as mc]
