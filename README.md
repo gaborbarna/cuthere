@@ -1,20 +1,20 @@
 # cuthere
 
-FIXME: description
+A clojure social network in development stage.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Install clojure and leiningen.
 
 ## Usage
 
-FIXME: explanation
-
-    $ java -jar cuthere-0.1.0-standalone.jar [args]
+lein run
 
 ## Options
 
-FIXME: listing of options this app accepts.
+* -c, --config-file      config/default.edn  config file location
+* -d, --no-dev, --dev    false               start in development mode
+* -x, --no-help, --help  false               show help
 
 ## Examples
 
@@ -23,14 +23,3 @@ FIXME: listing of options this app accepts.
 ### Bugs
 
 ...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2013 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
