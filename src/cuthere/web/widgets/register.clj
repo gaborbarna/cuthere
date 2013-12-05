@@ -18,9 +18,9 @@
      
 (actions/defjsonaction "register" [email name password]
   (let [user (db/add-user email name password :basic)
-        email-verification (-> user :email-verification :verification-text)
+        email-confirmation (-> user :email-confirmation :confirmation-text)
         username (user :username)
-        body (register-confirmation-layout username email-verification)]
+        body (register-confirmation-layout username email-confirmation)]
     (send-mail [email] "registration" body)
     (user "username")))
 

@@ -76,6 +76,11 @@
       (submit-button "login"))
     [:p content])))
 
-(defn register-layout [&content]
+(defn register-layout [& content]
   (layout
    (register-widget)))
+
+(defn confirmation-layout [confirmed & content]
+  (layout
+   (h/html
+    (if confirmed [:p "Confirmation successful"] [:p "Confirmation error"]))))

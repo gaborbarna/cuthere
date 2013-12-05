@@ -7,8 +7,8 @@
   (hiccup/html5
    content))
 
-(defn register-confirmation-layout [username email-verification]
+(defn register-confirmation-layout [username email-confirmation]
   (email-layout
    (h/html
     [:p username]
-    [:p email-verification])))
+    [:p email-confirmation])))

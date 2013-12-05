@@ -18,10 +18,10 @@
         user {:_id (ObjectId.) :username username :password hash-pwd
               :type type}]
     (cond (= type :basic)
-          (let [verification-text (crypto.random/url-part 32)]
+          (let [confirmation-text (crypto.random/url-part 32)]
             (assoc user
-              :email-verification {:verification-text verification-text,
-                                   :verified false}))
+              :email-confirmation {:confirmation-text confirmation-text,
+                                   :confirmed false}))
           :else user)))
 
 (defn add-user [email username hash-pwd type]
@@ -29,19 +29,14 @@
     (mc/insert-and-return
      "users" user-map)))
 
-(defn verify-user [username verification-text]
-  (if-let [user (mc/find-one-as-map "users" {:username username})]
-    (if (= (user :type) :basic)
-      (= ((user :email-verification) :verification-text) verification-text)
-      true)
-    false))
-
 (defn get-dbobject-fields [dbobject & fields]
   (into {} (for [k fields] [(keyword k) (.get dbobject k)])))
 
+(deftrace confirmed? [user]
+  (or (not= (user :type) "basic") (-> user :email-confirmation :confirmed)))
+
 (defn load-user-record [username]
   (timbre/info (<< "looking up user \"~{username}\""))
-  (if-let [user (mc/find-one "users" {:username username})]
-    (get-dbobject-fields user "username" "password")
+  (if-let [user (mc/find-one-as-map "users" {:username username})]
+    (if (confirmed? user) user nil)
     nil))
-
