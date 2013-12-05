@@ -7,6 +7,8 @@
   (:gen-class))
 
 
+(declare cfg)
+
 (def env-variables ["PORT", "MONGOLAB" "PWD"])
 
 (defn safe-submap [m k]
@@ -50,3 +52,6 @@
       {:show-help (or show-help (opts :help)), :opts (dissoc opts :help),
        :extras extras, :banner banner-extras})
     (catch Exception e (get-cli [] :msg (.getMessage e) :show-help true))))
+
+(defn def-cfg [cfg]
+  (def cfg cfg))

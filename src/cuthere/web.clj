@@ -9,7 +9,6 @@
             [taoensso.timbre :as timbre]
             [noir.session :as sess]))
 
-(defmacro dbg[x] `(let [x# ~x] (println "dbg:" '~x "=" x#) x#))
 
 (defn init [cfg]
   (timbre/info "initialize app")

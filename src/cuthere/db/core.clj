@@ -1,5 +1,4 @@
-
-1(ns cuthere.db.core
+(ns cuthere.db.core
   (:require [monger.core :as mg]
             [monger.collection :as mc]
             [taoensso.timbre :as timbre]
@@ -25,7 +24,7 @@
                                    :verified false}))
           :else user)))
 
-(defn add-user [username hash-pwd type]
+(defn add-user [email username hash-pwd type]
   (let [user-map (create-user-map username hash-pwd type)]
     (mc/insert-and-return
      "users" user-map)))

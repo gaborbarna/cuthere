@@ -1,7 +1,7 @@
 (ns cuthere.core
   (:require
     [cuthere.web :refer [handler init]]
-    [cuthere.config :refer [get-config get-cli]]
+    [cuthere.config :refer [get-config get-cli def-cfg]]
     [ring.middleware.reload :as reload]
     [org.httpkit.server :as http-kit]
     [taoensso.timbre :as timbre]
@@ -15,6 +15,7 @@
     (http-kit/run-server
      (if dev (reload/wrap-reload handler) handler)
      {:port port})
+    (def-cfg cfg)
     (init cfg)
     (timbre/info (<< "server started on port ~{port}"))))
 

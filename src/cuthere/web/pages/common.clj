@@ -79,4 +79,3 @@
 (defn register-layout [&content]
   (layout
    (register-widget)))
-

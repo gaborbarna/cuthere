@@ -14,6 +14,7 @@
                  [ring-server "0.3.1"]
                  [ritz/ritz-nrepl-middleware "0.7.0"]
                  [org.clojure/tools.trace "0.7.6"]
+                 [com.draines/postal "1.11.1"]
                  [crypto-random "1.1.0"]]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
