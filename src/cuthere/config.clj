@@ -9,7 +9,7 @@
 
 (declare cfg)
 
-(def env-variables ["PORT", "MONGOLAB" "PWD"])
+(def env-variables ["PORT", "MONGOLAB_URI" "PWD"])
 
 (defn safe-submap [m k]
   (let [sub-map (if (map? m) (or (m k) {}) {})]
