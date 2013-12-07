@@ -3,13 +3,15 @@
     [taoensso.timbre :as timbre]
     [clojure.tools.cli :refer [cli]]
     [clojure.edn :as edn]
+    [cuthere.utils :refer [dbg]]
     [clojure.core.strint :refer [<<]])
   (:gen-class))
 
 
 (declare cfg)
 
-(def env-variables ["PORT", "MONGOLAB_URI" "PWD"])
+(def env-variables [{:key "PORT", :fn #(Integer. %)},
+                    {:key "MONGOLAB_URI"} {:key "PWD"}])
 
 (defn safe-submap [m k]
   (let [sub-map (if (map? m) (or (m k) {}) {})]
@@ -28,8 +30,10 @@
   (reduce (fn [acc cfg] (merge-configs-2 acc cfg)) {} cfgs))
 
 (defn get-env [env-variables]
-  (reduce (fn [acc k] (let [v (System/getenv k)]
-                        (if v (assoc acc (keyword k) v) acc)))
+  (reduce (fn [acc env]
+            (let [k (env :key)
+                  v (System/getenv k)]
+              (if v (assoc acc (keyword k) ((or (env :fn) identity) v)) acc)))
           {} env-variables))
 
 (defn get-config [cli-conf]
