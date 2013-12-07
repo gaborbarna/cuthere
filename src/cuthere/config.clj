@@ -29,7 +29,7 @@
 
 (defn get-env [env-variables]
   (reduce (fn [acc k] (let [v (System/getenv k)]
-                        (if v (assoc acc (symbol k) v) acc)))
+                        (if v (assoc acc (keyword k) v) acc)))
           {} env-variables))
 
 (defn get-config [cli-conf]
