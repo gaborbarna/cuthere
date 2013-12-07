@@ -28,7 +28,8 @@
   (reduce (fn [acc cfg] (merge-configs-2 acc cfg)) {} cfgs))
 
 (defn get-env [env-variables]
-  (reduce (fn [acc k] (let [v (System/getenv k)] (if v (assoc acc k v) acc)))
+  (reduce (fn [acc k] (let [v (System/getenv k)]
+                        (if v (assoc acc (symbol k) v) acc)))
           {} env-variables))
 
 (defn get-config [cli-conf]
@@ -36,6 +37,7 @@
         config-file (cli-conf :config-file)
         file-conf (edn/read-string (slurp config-file))]
     (timbre/info (<< "config file ~{config-file} loaded"))
+    (timbre/info (<< "env ~{env-conf}"))
     (merge-configs file-conf env-conf cli-conf)))
 
 (defn parse-cli [args]
