@@ -7,11 +7,10 @@
 
 
 (defn confirm-user [confirmation-text]
-  (if-let [user (mc/find-one-as-map "users" {"email-confirmation.confirmation-text"
+  (when-let [user (mc/find-one-as-map "users" {"email-confirmation.confirmation-text"
                                              confirmation-text})]
     (do
       (mc/update "users" {:_id (user :_id)}
                  {$set {"email-confirmation.confirmed" true}})
       (timbre/info (<< "user ~{(user :username)} confirmed"))
-      true)
-    false))
+      true)))

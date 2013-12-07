@@ -38,6 +38,5 @@
 
 (defn load-user-record [username]
   (timbre/info (<< "looking up user \"~{username}\""))
-  (if-let [user (mc/find-one-as-map "users" {:username username})]
-    (if (confirmed? user) user nil)
-    nil))
+  (when-let [user (mc/find-one-as-map "users" {:username username})]
+    (when (confirmed? user) user)))
