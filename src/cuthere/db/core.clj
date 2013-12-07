@@ -26,6 +26,7 @@
 
 (defn add-user [email username hash-pwd type]
   (let [user-map (create-user-map username hash-pwd type)]
+    (timbre/info (<< "creating user ~{username}"))
     (mc/insert-and-return
      "users" user-map)))
 

@@ -4,6 +4,7 @@
             [ring.server.standalone :refer [serve]]
             [ring.middleware.file :refer [wrap-file]]
             [ring.middleware.file-info :refer [wrap-file-info]]
+            [clojure.edn :as edn]
             [clojure.core.strint :refer [<<]]))
 
 
@@ -15,12 +16,13 @@
     (wrap-file-info)))
 
 (defn start-server
-  [& [port]]
-  (let [port (if port (Integer/parseInt port) 3000)]
+  [& [port config-file]]
+  (let [file-conf (edn/read-string (slurp (or config-file "config/default.edn")))
+        port (file-conf :PORT)]
     (reset! server
             (serve (get-handler)
                    {:port port
-                    :init init
+                    :init #(init file-conf)
                     :auto-reload? true
                     :destroy destroy
                     :join? false}))
@@ -30,6 +32,6 @@
   (.stop @server)
   (reset! server nil))
 
-(defn add-user [username password]
-  (let [user (db/add-user username password)]
+(defn add-user [email username password]
+  (let [user (db/add-user email username password :custom)]
     (println user)))
