@@ -16,3 +16,7 @@
   (oauth2/make-auth-request
    (get-facebook-oauth2 cfg)
    csrf))
+
+(defn get-access-token [cfg csrf auth-resp]
+  (oauth2/get-access-token
+   (get-facebook-oauth2 cfg) auth-resp (get-auth-req cfg csrf)))

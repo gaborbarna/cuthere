@@ -3,7 +3,7 @@
             [cuthere.web.misc :refer [redirect-to-login]]
             [cuthere.config :refer [cfg]]
             [cuthere.utils :refer [dbg]]
-            [cuthere.web.oauth :refer [get-auth-req]]
+            [cuthere.web.oauth :refer [get-auth-req get-access-token]]
             [ring.util.response :as resp]
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :refer [make-auth]]
@@ -30,9 +30,13 @@
               auth-req (get-auth-req cfg csrf)]
           (assoc (resp/redirect (auth-req :uri)) :session (assoc session :csrf csrf))))
    (GET "/facebook-callback" {:keys [params session] :as request}
-         (dbg params)
-         (dbg session)
-         (redirect-to-login request))))
+        (if (= (session :csrf) (params :state))
+          (do
+            (dbg "OK")
+            (let [acces-token (get-access-token cfg (session :csrf) params)]
+              (dbg acces-token)
+              (redirect-to-login request)))
+              (redirect-to-login request)))))
 
 (defn wrap-friend [handler]
   "Wrap friend authentication around handler."
