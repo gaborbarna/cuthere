@@ -20,3 +20,6 @@
 (defn get-access-token [cfg csrf auth-resp]
   (oauth2/get-access-token
    (get-facebook-oauth2 cfg) auth-resp (get-auth-req cfg csrf)))
+
+(defn get-facebook-me [acces-token]
+  (oauth2/get "https://graph.facebook.com/me" access-token))

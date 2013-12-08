@@ -3,7 +3,8 @@
             [cuthere.web.misc :refer [redirect-to-login]]
             [cuthere.config :refer [cfg]]
             [cuthere.utils :refer [dbg]]
-            [cuthere.web.oauth :refer [get-auth-req get-access-token]]
+            [cuthere.web.oauth :refer [get-auth-req get-access-token
+                                       get-facebook-me]]
             [ring.util.response :as resp]
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :refer [make-auth]]
@@ -34,7 +35,7 @@
           (do
             (dbg "OK")
             (let [acces-token (get-access-token cfg (session :csrf) params)
-                  me (oauth2/get "https://graph.facebook.com/me" access-token)]
+                  me (get-facebook-me acces-token)]
               (dbg acces-token)
               (dbg me)
               (redirect-to-login request)))
