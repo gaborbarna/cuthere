@@ -33,8 +33,10 @@
         (if (= (session :csrf) (params :state))
           (do
             (dbg "OK")
-            (let [acces-token (get-access-token cfg (session :csrf) params)]
+            (let [acces-token (get-access-token cfg (session :csrf) params)
+                  me (oauth2/get "https://graph.facebook.com/me" access-token)]
               (dbg acces-token)
+              (dbg me)
               (redirect-to-login request)))
               (redirect-to-login request)))))
 
