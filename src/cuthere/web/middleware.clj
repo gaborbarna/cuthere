@@ -34,9 +34,9 @@
         (if (= (session :csrf) (params :state))
           (do
             (dbg "OK")
-            (let [acces-token (get-access-token cfg (session :csrf) params)
-                  me (get-facebook-me acces-token)]
-              (dbg acces-token)
+            (let [access-token (get-access-token cfg (session :csrf) params)
+                  me (get-facebook-me {:ouath2 access-token})]
+              (dbg access-token)
               (dbg me)
               (redirect-to-login request)))
               (redirect-to-login request)))))
