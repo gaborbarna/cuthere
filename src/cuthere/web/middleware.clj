@@ -27,7 +27,7 @@
    (GET "/facebook-login" {:keys [params session] :as request}
          (let [auth-req (get-auth-req cfg)]
            (resp/redirect (auth-req :uri))))
-   (POST "/facebook-callback" {:keys [params session] :as request}
+   (GET "/facebook-callback" {:keys [params session] :as request}
          (dbg params)
          (dbg session)
          (redirect-to-login request))))
