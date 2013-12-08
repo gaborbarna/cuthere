@@ -8,6 +8,7 @@
             [cemerick.friend :as friend]
             [cemerick.friend.workflows :refer [make-auth]]
             [compojure.core :refer [GET POST routes defroutes]]
+            [crypto.random]
             [cemerick.friend [workflows :as workflows]
                              [credentials :as creds]]))
 
@@ -25,8 +26,11 @@
              (redirect-to-login request))
            (redirect-to-login request)))
    (GET "/facebook-login" {:keys [params session] :as request}
-         (let [auth-req (get-auth-req cfg)]
-           (resp/redirect (auth-req :uri))))
+        (let [csrf (crypto.random/url-part 64)
+              auth-req (get-auth-req cfg csrf)]
+          (assoc :session session)
+          (update-in [:session] assoc :csrf csrf)
+          (resp/redirect (auth-req :uri))))
    (GET "/facebook-callback" {:keys [params session] :as request}
          (dbg params)
          (dbg session)

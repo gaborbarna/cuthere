@@ -12,7 +12,7 @@
    :scope ["user_events"]
    :grant-type "authorization_code"})
 
-(defn get-auth-req [cfg]
+(defn get-auth-req [cfg csrf]
   (oauth2/make-auth-request
    (get-facebook-oauth2 cfg)
-   "some-csrf-protection-string"))
+   csrf))
