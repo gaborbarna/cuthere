@@ -9,7 +9,7 @@
 
 (def login-form
   (h/html
-   (form-to [:post "/login"]
+   (form-to [:post "/basic-login"]
             (label "login" "Login")
             (text-field "username")
             (password-field "password")
@@ -68,12 +68,8 @@
 
 (defn login-layout [& content]
   (layout
+   login-form
    (h/html
-    (form-to [:post "/login"]
-      (label "login" "Login")
-      (text-field "username")
-      (password-field "password")
-      (submit-button "login"))
     [:p content])))
 
 (defn register-layout [& content]

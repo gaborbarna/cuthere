@@ -11,7 +11,8 @@
 (declare cfg)
 
 (def env-variables [{:key "PORT", :fn #(Integer. %)},
-                    {:key "MONGOLAB_URI"} {:key "PWD"}])
+                    {:key "MONGOLAB_URI"} {:key "PWD"},
+                    {:key "FACEBOOK_CLIENT_ID"} {:key "FACEBOOK_CLIENT_SECRET"}])
 
 (defn safe-submap [m k]
   (let [sub-map (if (map? m) (or (m k) {}) {})]

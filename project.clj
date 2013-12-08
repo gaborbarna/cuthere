@@ -15,6 +15,7 @@
                  [ritz/ritz-nrepl-middleware "0.7.0"]
                  [org.clojure/tools.trace "0.7.6"]
                  [com.draines/postal "1.11.1"]
+                 [wuzhe/clj-oauth2 "0.5.3"]
                  [crypto-random "1.1.0"]]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
