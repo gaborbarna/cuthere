@@ -35,7 +35,7 @@
           (do
             (dbg "OK")
             (let [access-token (get-access-token cfg (session :csrf) params)
-                  me (get-facebook-me {:ouath2 access-token})]
+                  me (get-facebook-me {:oauth2 access-token})]
               (dbg access-token)
               (dbg me)
               (redirect-to-login request)))
