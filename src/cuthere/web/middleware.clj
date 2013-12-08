@@ -28,8 +28,7 @@
    (GET "/facebook-login" {:keys [params session] :as request}
         (let [csrf (crypto.random/url-part 64)
               auth-req (get-auth-req cfg csrf)]
-          {:session (assoc session :csrf csrf)}
-          (resp/redirect (auth-req :uri))))
+          (assoc (resp/redirect (auth-req :uri)) :session (assoc session :csrf csrf))))
    (GET "/facebook-callback" {:keys [params session] :as request}
          (dbg params)
          (dbg session)
