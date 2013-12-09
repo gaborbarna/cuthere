@@ -36,7 +36,6 @@
   (store-user user-map))
 
 (defn get-facebook-user [body]
-  (dbg body)
   (if-let [user (load-user-record (body "username") :type :facebook)]
     user
     (let [keyword-map (into {} (map (fn [k v] [(keyword k) v]) body))]
