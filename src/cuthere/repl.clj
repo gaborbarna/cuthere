@@ -1,6 +1,6 @@
 (ns cuthere.repl
   (:require [cuthere.web :refer [handler init destroy]]
-            [cuthere.db.core :as db]
+            [cuthere.db.users :as users]
             [ring.server.standalone :refer [serve]]
             [ring.middleware.file :refer [wrap-file]]
             [ring.middleware.file-info :refer [wrap-file-info]]
@@ -33,5 +33,8 @@
   (reset! server nil))
 
 (defn add-user [email username password]
-  (let [user (db/add-user email username password :custom)]
+  (let [user (users/add-user {:email email
+                              :username username
+                              :password password
+                              :type :basic})]
     (println user)))

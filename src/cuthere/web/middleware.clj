@@ -1,5 +1,5 @@
 (ns cuthere.web.middleware
-  (:require [cuthere.db.core :refer [load-user-record]]
+  (:require [cuthere.db.users :refer [load-user-record get-facebook-user]]
             [cuthere.web.misc :refer [redirect-to-login]]
             [cuthere.config :refer [cfg]]
             [cuthere.utils :refer [dbg]]
@@ -33,13 +33,11 @@
    (GET "/facebook-callback" {:keys [params session] :as request}
         (if (= (session :csrf) (params :state))
           (do
-            (dbg "OK")
             (let [access-token (get-access-token cfg (session :csrf) params)
-                  me (get-facebook-me {:oauth2 access-token})]
-              (dbg access-token)
-              (dbg me)
-              (redirect-to-login request)))
-              (redirect-to-login request)))))
+                  me (get-facebook-me {:oauth2 access-token})
+                  body (me "body")]
+              (get-facebook-user body)))
+          (redirect-to-login request)))))
 
 (defn wrap-friend [handler]
   "Wrap friend authentication around handler."

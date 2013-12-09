@@ -4,7 +4,7 @@
             [taoensso.timbre :as timbre]
             [cuthere.web.pages.email :refer [register-confirmation-layout]]
             [cuthere.mail :refer [send-mail]]
-            [cuthere.db.core :as db]))
+            [cuthere.db.users :as users]))
 
 (defn register-widget []
   (widgets/with-div
@@ -17,7 +17,8 @@
      [:button {:type "submit"} "Register"])))
      
 (actions/defjsonaction "register" [email name password]
-  (let [user (db/add-user email name password :basic)
+  (let [user (users/add-user {:email email :username name
+                              :password password :type :basic})
         email-confirmation (-> user :email-confirmation :confirmation-text)
         username (user :username)
         body (register-confirmation-layout username email-confirmation)]

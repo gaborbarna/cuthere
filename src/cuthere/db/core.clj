@@ -1,42 +1,9 @@
 (ns cuthere.db.core
   (:require [monger.core :as mg]
-            [monger.collection :as mc]
             [taoensso.timbre :as timbre]
-            [cemerick.friend.credentials :refer [hash-bcrypt]]
-            [clojure.core.strint :refer [<<]]
-            [clojure.tools.trace :refer [deftrace]]
-            [crypto.random])
-  (:import [org.bson.types ObjectId]))
+            [clojure.core.strint :refer [<<]]))
 
 
 (defn init [uri]
   (timbre/info (<< "db: ~{uri}"))
   (mg/connect-via-uri! uri))
-
-(defn create-user-map [username password type]
-  (let [hash-pwd (hash-bcrypt password)
-        user {:_id (ObjectId.) :username username :password hash-pwd
-              :type type}]
-    (cond (= type :basic)
-          (let [confirmation-text (crypto.random/url-part 32)]
-            (assoc user
-              :email-confirmation {:confirmation-text confirmation-text,
-                                   :confirmed false}))
-          :else user)))
-
-(defn add-user [email username hash-pwd type]
-  (let [user-map (create-user-map username hash-pwd type)]
-    (timbre/info (<< "creating user ~{username}"))
-    (mc/insert-and-return
-     "users" user-map)))
-
-(defn get-dbobject-fields [dbobject & fields]
-  (into {} (for [k fields] [(keyword k) (.get dbobject k)])))
-
-(deftrace confirmed? [user]
-  (or (not= (user :type) "basic") (-> user :email-confirmation :confirmed)))
-
-(defn load-user-record [username]
-  (timbre/info (<< "looking up user \"~{username}\""))
-  (when-let [user (mc/find-one-as-map "users" {:username username})]
-    (when (confirmed? user) user)))

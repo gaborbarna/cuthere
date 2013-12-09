@@ -1,6 +1,5 @@
 (ns cuthere.web.handlers.registration
-  (:require [clojure.core.strint :refer [<<]]
-            [taoensso.timbre :as timbre]
+  (:require [taoensso.timbre :as timbre]
             [clojure.core.strint :refer [<<]]
             [monger.collection :as mc]
             [monger.operators :refer [$set]]))
