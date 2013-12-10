@@ -36,7 +36,9 @@
             (let [access-token (get-access-token cfg (session :csrf) params)
                   me (get-facebook-me {:oauth2 access-token})
                   body (me :body)]
-              (get-facebook-user body)))
+             (make-auth (get-facebook-user body)
+                        {::friend/workflow :multi-factor
+                         ::friend/redirect-on-auth? true})))
           (redirect-to-login request)))))
 
 (defn wrap-friend [handler]
