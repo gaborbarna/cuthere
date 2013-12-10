@@ -38,5 +38,5 @@
 (defn get-facebook-user [body]
   (if-let [user (load-user-record (body "username") :type :facebook)]
     user
-    (let [keyword-map (into {} (map (fn [k v] [(keyword k) v]) body))]
+    (let [keyword-map (into {} (for [[k v] body] [(keyword k) v]))]
       (add-user (assoc keyword-map :type :facebook)))))
