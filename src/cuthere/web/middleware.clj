@@ -10,6 +10,7 @@
             [cemerick.friend.workflows :refer [make-auth]]
             [compojure.core :refer [GET POST routes defroutes]]
             [crypto.random]
+            [clj-json [core :as json]]
             [cemerick.friend [workflows :as workflows]
                              [credentials :as creds]]))
 
@@ -35,7 +36,7 @@
           (do
             (let [access-token (get-access-token cfg (session :csrf) params)
                   me (get-facebook-me {:oauth2 access-token})
-                  body (me :body)]
+                  body (json/parse-string (me :body))]
              (make-auth (get-facebook-user body)
                         {::friend/workflow :multi-factor
                          ::friend/redirect-on-auth? true})))
