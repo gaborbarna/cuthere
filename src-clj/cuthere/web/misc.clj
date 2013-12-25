@@ -18,4 +18,3 @@ Ring request. (Only useful in conjunction with compojure.core/context.)"
 
 (defn redirect-to-login [request]
   (resp/redirect (context-uri request "login")))
-
