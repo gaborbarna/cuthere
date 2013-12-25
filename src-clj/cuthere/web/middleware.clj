@@ -11,6 +11,7 @@
             [compojure.core :refer [GET POST routes defroutes]]
             [crypto.random]
             [clj-json [core :as json]]
+            [clojure.tools.trace :refer [deftrace]]
             [cemerick.friend [workflows :as workflows]
                              [credentials :as creds]]))
 
@@ -53,3 +54,16 @@
                                resp/response
                                (resp/status 401))
     :workflows [(custom-workflow)]}))
+
+(defn get-user [req]
+  (when-let [id (friend/identity req)]
+    (-> id :authentications vals first)))
+
+(defn wrap-only-identified [handler]
+  (fn [req]
+    (friend/authenticated
+     (let [user (get-user req)]
+       (handler (assoc-in req [:params :user] user))))))
+       ;; (-> {:success false, :errors ["unauthorized"]}
+       ;;    resp/response
+       ;;    (resp/status 401)))))

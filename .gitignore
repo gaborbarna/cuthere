@@ -9,3 +9,5 @@ pom.xml.asc
 /.nrepl-port
 *.clj~
 *.edn~
+*.swp
+/resources/public/js/main.js
