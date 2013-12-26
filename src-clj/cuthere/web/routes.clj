@@ -25,4 +25,6 @@
 (defroutes only-identified
   (GET "/create-event" req (common/create-event-layout req))
   (POST "/create-event" [user event :as req]
-        (resp/response (events/create-event user event))))
+        (resp/response (events/create-event user event)))
+  (POST "/attend-event" [user event-id :as req]
+        (resp/response (events/attend-event user event-id))))
